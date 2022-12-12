@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -206, y: -111}
-  m_SizeDelta: {x: 285.4591, y: 58.3784}
+  m_AnchoredPosition: {x: 15.6282, y: -111}
+  m_SizeDelta: {x: 728.7156, y: 58.3784}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4261336809166236725
 CanvasRenderer:
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
-  m_fontSizeBase: 48
+  m_fontSize: 38.11
+  m_fontSizeBase: 38.11
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -403,7 +403,7 @@ GameObject:
   - component: {fileID: 4261336810163010817}
   - component: {fileID: 4261336810163010819}
   - component: {fileID: 4261336810163010816}
-  - component: {fileID: 588922223546489116}
+  - component: {fileID: 2822774193398275383}
   m_Layer: 5
   m_Name: LostDogID
   m_TagString: Untagged
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &588922223546489116
+--- !u!114 &2822774193398275383
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -483,14 +483,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 4261336810163010830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d200adc9d2e93e845825e1bba5291a27, type: 3}
+  m_Script: {fileID: 11500000, guid: b637e8c3977d9ec4f811adfc2946e55f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 0}
-  dogImage: {fileID: 4261336810606988339}
   dogName: {fileID: 4261336810538589971}
-  dogType: {fileID: 4261336810262151932}
-  dateLost: {fileID: 4261336809166236722}
+  type: {fileID: 4261336810262151932}
+  date: {fileID: 4261336809166236722}
+  description: {fileID: 0}
+  dogImage: {fileID: 4261336810606988339}
+  connectedProfile:
+    dogName: 
+    dogType: 
+    dogDate: 
+    dogDescription: 
+    dogImage: {fileID: 0}
+    isLost: 0
 --- !u!1 &4261336810262151930
 GameObject:
   m_ObjectHideFlags: 0
