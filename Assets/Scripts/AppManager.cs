@@ -26,9 +26,12 @@ public class AppManager : MonoBehaviour
 	public TMP_Dropdown lostOrFoundDropdown;
 	public Image dogImageField;
 	
+	byte[] dogImageData;
+	
 	void Start()
 	{
 		LoadData();
+		UpdateData();
 	}
 	
 	public void OpenLostDogTab()
@@ -57,15 +60,31 @@ public class AppManager : MonoBehaviour
 		InputDog.SetActive(true);
 	}
 	
+	public void CloseAddDogScreen()
+	{
+		LostTab.SetActive(true);
+		FoundTab.SetActive(false);
+		AddDogButton.SetActive(true);
+		InputDog.SetActive(false);
+	}
+	
     public void AddDog()
 	{
 		SaveDogProfile newDogProfile = new SaveDogProfile();
 		
 		newDogProfile.dogName = nameInputField.text;
+		nameInputField.text = "";
 		newDogProfile.dogType = typeInputField.text;
+		typeInputField.text = "";
 		newDogProfile.dogDate = dateInputField.text;
+		dateInputField.text = "";
 		newDogProfile.dogDescription = descriptionInputField.text;
-		newDogProfile.dogImage = dogImageField.sprite;
+		descriptionInputField.text = "";
+		
+		// var texture = new Texture2D(1, 1);
+		// texture = dogImageField.sprite.texture;
+		newDogProfile.dogImage = dogImageData;
+		dogImageField.sprite = null;
 		
 		if(lostOrFoundDropdown.captionText.text == "Lost")
 			newDogProfile.isLost = true;
@@ -91,7 +110,7 @@ public class AppManager : MonoBehaviour
 	
 	public void UpdateData()
 	{
-				foreach(GameObject profile in lostList.transform)
+		foreach(GameObject profile in lostList.transform)
 		{
 			Destroy(profile);
 		}
@@ -102,16 +121,13 @@ public class AppManager : MonoBehaviour
 		
 		foreach(SaveDogProfile profile in profiles.lostDogs)
 		{
-			if(profile.isLost)
-			{
-				GameObject dogProfileInstance = Instantiate(dogProfilePrefab, lostList.transform);
-				dogProfileInstance.GetComponent<DogProfile>().CreateNewDogProfile(profile);
-			}
-			else
-			{
-				GameObject dogProfileInstance = Instantiate(dogProfilePrefab, foundList.transform);
-				dogProfileInstance.GetComponent<DogProfile>().CreateNewDogProfile(profile);
-			}
+			GameObject dogProfileInstance = Instantiate(dogProfilePrefab, lostList.transform);
+			dogProfileInstance.GetComponent<DogProfile>().CreateNewDogProfile(profile);
+		}
+		foreach(SaveDogProfile profile in profiles.foundDogs)
+		{
+			GameObject dogProfileInstance = Instantiate(dogProfilePrefab, foundList.transform);
+			dogProfileInstance.GetComponent<DogProfile>().CreateNewDogProfile(profile);
 		}
 	}
 	
@@ -127,7 +143,7 @@ public class AppManager : MonoBehaviour
 			print("Image path: " + path);
 			if(path != null)
 			{
-				Texture2D texture = NativeCamera.LoadImageAtPath(path, maxSize);
+				Texture2D texture = NativeCamera.LoadImageAtPath(path, maxSize, false, false);
 				if(texture == null)
 				{
 					print("Couldn't load texture from " + path);
@@ -145,10 +161,17 @@ public class AppManager : MonoBehaviour
 
 				material.mainTexture = texture;
 
+				Destroy( quad, 5f );
+
 				Sprite dogImageSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
 				dogImageField.sprite = dogImageSprite;
 				dogImageField.color = new Color(1, 1, 1, 1);
-				Destroy( quad, 5f );
+				
+				//texture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
+				//texture.Apply();
+				dogImageData = texture.EncodeToPNG();
+				
+				Debug.Log(dogImageData);
 
 				// If a procedural texture is not destroyed manually, 
 				// it will only be freed after a scene change
@@ -195,6 +218,6 @@ public class SaveDogProfile
 	public string dogType;
 	public string dogDate;
 	public string dogDescription;
-	public Sprite dogImage;
+	public byte[] dogImage;
 	public bool isLost;
 }
